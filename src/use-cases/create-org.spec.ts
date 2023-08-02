@@ -3,6 +3,7 @@ import { InMemoryOrgsRepository } from '../repositories/in-memory/in-memory-orgs
 import { CreateOrgUseCase } from './create-org'
 import { compare } from 'bcryptjs'
 import { EmailInUseError } from './errors/email-in-use'
+import { CepNotExistsError } from './errors/cep-not-exists'
 
 let orgsRepository: InMemoryOrgsRepository
 let sut: CreateOrgUseCase
@@ -15,7 +16,9 @@ describe('Create orgs use case', () => {
 
   it('should be able to create a new org', async () => {
     const { org } = await sut.execute({
-      cep: '123456',
+      cep: '13973041',
+      state: 'test',
+      city: 'test',
       email: 'test@test.com',
       name: 'test',
       password: '123456',
@@ -27,7 +30,9 @@ describe('Create orgs use case', () => {
 
   it('should hash the org password', async () => {
     const { org } = await sut.execute({
-      cep: '123456',
+      cep: '13973041',
+      state: 'test',
+      city: 'test',
       email: 'test@test.com',
       name: 'test',
       password: '123456',
@@ -43,7 +48,9 @@ describe('Create orgs use case', () => {
     const email = 'test@test.com'
 
     await sut.execute({
-      cep: '123456',
+      cep: '13973041',
+      state: 'test',
+      city: 'test',
       email,
       name: 'test',
       password: '123456',
@@ -52,12 +59,30 @@ describe('Create orgs use case', () => {
 
     await expect(() =>
       sut.execute({
-        cep: '123456',
+        cep: '13973041',
+        state: 'test',
+        city: 'test',
         email,
         name: 'test',
         password: '123456',
         phone: '1111111111',
       }),
     ).rejects.toBeInstanceOf(EmailInUseError)
+  })
+
+  it('should not be able to register a new org with same email twice', async () => {
+    const email = 'test@test.com'
+
+    await expect(() =>
+      sut.execute({
+        cep: '12345678',
+        state: 'test',
+        city: 'test',
+        email,
+        name: 'test',
+        password: '123456',
+        phone: '1111111111',
+      }),
+    ).rejects.toBeInstanceOf(CepNotExistsError)
   })
 })

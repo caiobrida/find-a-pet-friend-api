@@ -40,13 +40,21 @@ enum Environmnet {
   LARGE
 }
 
+enum Role {
+  ADMIN
+  NORMAL
+}
+
 model Org {
   id         String   @id @default(uuid())
   name       String
   email      String   @unique
+  city       String
+  state      String
   cep        String
   password   String
   phone      String
+  role       Role     @default(NORMAL)
   created_at DateTime @default(now())
   pets       Pet[]
 
@@ -62,8 +70,8 @@ model Pet {
   energy_level       EnergyLevel
   independence_level IndependenceLevel
   environment        Environmnet
-  photos             String[]
-  requirements       String[]
+  photos             String[]          @default([])
+  requirements       String[]          @default([])
 
   org    Org    @relation(fields: [org_id], references: [id])
   org_id String

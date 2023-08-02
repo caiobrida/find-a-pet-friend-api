@@ -17,6 +17,8 @@ describe('Get orgs use case', () => {
     const createdOrg = await orgsRepository.create({
       cep: '123456',
       email: 'test@test.com',
+      city: 'test',
+      state: 't',
       name: 'test',
       password: await hash('123456', 6),
       phone: '1111111111',

@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "pets" ALTER COLUMN "photos" SET DEFAULT ARRAY[]::TEXT[],
+ALTER COLUMN "requirements" SET DEFAULT ARRAY[]::TEXT[];
