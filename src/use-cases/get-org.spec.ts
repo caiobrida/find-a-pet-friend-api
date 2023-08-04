@@ -22,6 +22,7 @@ describe('Get orgs use case', () => {
       name: 'test',
       password: await hash('123456', 6),
       phone: '1111111111',
+      role: 'NORMAL',
     })
 
     const { org } = await sut.execute({ orgId: createdOrg.id })

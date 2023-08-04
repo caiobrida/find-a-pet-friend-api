@@ -1,8 +1,6 @@
 import { Pet, Prisma } from '@prisma/client'
 import { randomUUID } from 'node:crypto'
 import { PetsRepository } from '../pets-repository'
-import OrgsPetsSearchQuery from '@/@types/orgs-pets-search-query'
-import { customFilter } from '@/utils/custom-filter-array'
 
 export class InMemoryPetsRepository implements PetsRepository {
   public items: Pet[] = []
@@ -33,14 +31,5 @@ export class InMemoryPetsRepository implements PetsRepository {
     if (!pet) return null
 
     return pet
-  }
-
-  async searchMany(query: OrgsPetsSearchQuery, page: number) {
-    const pets = customFilter(query, this.items).slice(
-      (page - 1) * 20,
-      page * 20,
-    )
-
-    return pets
   }
 }
