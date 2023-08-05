@@ -1,4 +1,4 @@
-import { Org, Prisma } from '@prisma/client'
+import { Org } from '@prisma/client'
 import { OrgsRepository } from '../repositories/orgs-repository'
 import OrgsPetsSearchQuery from '@/@types/orgs-pets-search-query'
 

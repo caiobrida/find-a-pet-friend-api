@@ -6,9 +6,9 @@ import { verifyJWT } from '@/http/middlewares/verify-jwt'
 import { get } from './get'
 
 export async function orgsRoutes(app: FastifyInstance) {
-  app.get('/search-orgs-pets', search)
-  app.post('/auth', authenticate)
+  app.get('/orgs/search-pets', search)
   app.post('/orgs', create)
+  app.post('/auth', authenticate)
 
   app.get('/org', { onRequest: [verifyJWT] }, get)
 }
