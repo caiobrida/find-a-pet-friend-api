@@ -43,17 +43,20 @@ export class InMemoryOrgsRepository implements OrgsRepository {
     return org
   }
 
-  async searchMany(query: OrgsPetsSearchQuery, page: number) {
+  async searchMany(
+    city: string,
+    state: string,
+    query: OrgsPetsSearchQuery,
+    page: number,
+  ) {
     const filteredOrgs = this.items.filter(
-      (org) => org.city === query.city && org.state === query.state,
+      (org) => org.city === city && org.state === state,
     )
 
     if (!filteredOrgs) return []
 
     const petQuery = {
       ...query,
-      city: undefined,
-      state: undefined,
     }
 
     const orgsWithPets = filteredOrgs.map((org) => {

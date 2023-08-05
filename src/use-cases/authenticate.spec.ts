@@ -20,6 +20,9 @@ describe('Authenticate use case', () => {
       name: 'test',
       password: await hash('123456', 6),
       phone: '1111111111',
+      city: 'test',
+      state: 'test',
+      role: 'NORMAL',
     })
 
     const { org } = await sut.execute({
@@ -37,6 +40,9 @@ describe('Authenticate use case', () => {
       name: 'test',
       password: await hash('123456', 6),
       phone: '1111111111',
+      city: 'test',
+      state: 'test',
+      role: 'NORMAL',
     })
 
     await expect(() =>
@@ -54,6 +60,9 @@ describe('Authenticate use case', () => {
       name: 'test',
       password: await hash('123456', 6),
       phone: '1111111111',
+      city: 'test',
+      state: 'test',
+      role: 'NORMAL',
     })
 
     await expect(() =>

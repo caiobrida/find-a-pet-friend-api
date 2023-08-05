@@ -3,6 +3,8 @@ import { OrgsRepository } from '../orgs-repository'
 import { prisma } from '@/lib/prisma'
 import OrgsPetsSearchQuery from '@/@types/orgs-pets-search-query'
 
+const PAGE_SIZE = 20
+
 export class PrismaOrgsRepository implements OrgsRepository {
   async create(data: Prisma.OrgCreateInput) {
     const org = await prisma.org.create({
@@ -32,7 +34,30 @@ export class PrismaOrgsRepository implements OrgsRepository {
     return org
   }
 
-  async searchMany(query: OrgsPetsSearchQuery, page: number) {
-    throw new Error('Method not implemented.')
+  async searchMany(
+    city: string,
+    state: string,
+    query: OrgsPetsSearchQuery,
+    page: number,
+  ) {
+    const skip = (page - 1) * PAGE_SIZE
+
+    const orgs = await prisma.org.findMany({
+      where: {
+        city,
+        state,
+      },
+      include: {
+        pets: {
+          where: {
+            ...query,
+          },
+        },
+      },
+      skip,
+      take: PAGE_SIZE,
+    })
+
+    return orgs
   }
 }

@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { InMemoryOrgsRepository } from '../repositories/in-memory/in-memory-orgs-repository'
 import { hash } from 'bcryptjs'
 import { SearchOrgUseCase } from './search-orgs'
+import OrgsPetsSearchQuery from '@/@types/orgs-pets-search-query'
 
 let orgsRepository: InMemoryOrgsRepository
 let sut: SearchOrgUseCase
@@ -46,9 +47,12 @@ describe('Get orgs use case', () => {
       role: 'NORMAL',
     })
 
-    const query = { city: 'test2', state: 't2' }
-
-    const { orgs } = await sut.execute({ query, page: 1 })
+    const { orgs } = await sut.execute({
+      city: 'test2',
+      state: 't2',
+      query: {},
+      page: 1,
+    })
 
     expect(orgs).toHaveLength(2)
   })
@@ -128,16 +132,17 @@ describe('Get orgs use case', () => {
       role: 'NORMAL',
     })
 
-    const query = {
-      city: 'test',
-      state: 't',
+    const query: OrgsPetsSearchQuery = {
       age: 'ADULT',
       energy_level: 'HIGH',
     }
 
-    const { orgs } = await sut.execute({ query, page: 1 })
-
-    console.log('orgs', orgs)
+    const { orgs } = await sut.execute({
+      city: 'test',
+      state: 't',
+      query,
+      page: 1,
+    })
 
     expect(orgs).toHaveLength(1)
     expect(orgs[0].pets).toHaveLength(2)

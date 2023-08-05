@@ -1,10 +1,10 @@
 import { PrismaOrgsRepository } from '@/repositories/prisma/prisma-orgs-repository'
-import { GetOrgUseCase } from '../get-org'
+import { SearchOrgUseCase } from '../search-orgs'
 
-export function makeGetOrgUseCase() {
+export function makeSearchOrgUseCase() {
   const orgsRepository = new PrismaOrgsRepository()
 
-  const useCase = new GetOrgUseCase(orgsRepository)
+  const useCase = new SearchOrgUseCase(orgsRepository)
 
   return useCase
 }

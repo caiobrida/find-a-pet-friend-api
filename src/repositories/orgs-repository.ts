@@ -5,5 +5,10 @@ export interface OrgsRepository {
   create(data: Org | Prisma.OrgCreateInput): Promise<Org>
   findById(orgId: string): Promise<Org | null>
   findByEmail(email: string): Promise<Org | null>
-  searchMany(query: OrgsPetsSearchQuery, page: number): Promise<Org[]>
+  searchMany(
+    city: string,
+    state: string,
+    query: OrgsPetsSearchQuery,
+    page: number,
+  ): Promise<Org[]>
 }
